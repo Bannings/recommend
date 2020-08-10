@@ -1,0 +1,128 @@
+syntax = "proto3";
+package proto;
+
+service MiddlewareRPC {
+    rpc GetClassifyRecommend (ClassifyRequest) returns (ClassifyResponse){}
+    rpc GetClassifyRelateRecommend (MultiplyRecommendRequest) returns (MultiplyResponse){}
+    rpc GetMultiplyRecommend (MultiplyRecommendRequest) returns (MultiplyResponse){}
+    rpc GetRelateRecommend (RelateRecommendRequest) returns (MultiplyResponse){}
+    rpc GetSectionMoreRecommend (MultiplyRecommendRequest) returns (SectionMoreResponse){}
+}
+
+
+enum Status {
+    SUCCEED = 0;
+    FAILED = 1;
+}
+
+enum Gender {
+  MALE = 0;
+  FEMALE = 1;
+}
+
+enum RequestRuleType {
+  HOT = 0;
+  CLASSIFY = 1;
+  TOPIC = 2;
+  INTEREST = 3;
+}
+
+message UserInfo {
+  string Udid = 1;
+  int64 Uid = 2;
+  Gender Gender = 3;
+}
+
+message Passthrough {
+  string ExpId = 1;
+  string BucketId = 2;
+  string BucketName =3;
+  int64 Uid = 4;
+  string Udid = 5;
+  string AlgId = 6;
+  int64 ServeTime =7;
+}
+
+message Params {
+    // 规则召回keys
+    repeated string rule_keys = 1; // choices=[hot(hot),热血(classify,example),都市(topic,example),interest(interest)]
+    string rule_sort = 2; // example:"view",choices=["view","yesterday_view","month_view","ctr","click","read","collect","pay","recommend"]
+    RequestRuleType rule_type = 3; // 热门:0,分类:1, 主题:2, 兴趣:3
+    // 漫画相关召回cids
+    repeated int32 sim_cids = 9;
+    int32 len = 4;
+}
+
+message Log {
+    string recall = 1;
+    map<int32, int32> algo = 2;
+    repeated int32 cids = 3;
+}
+
+message ClassifyRequest {
+  UserInfo user = 1;
+  int32 length = 2;
+  string bussiness_id = 3;
+  repeated string rule_keys = 4; // choices=[hot(hot),热血(classify,example),都市(topic,example),interest(interest)]
+  string rule_sort = 5; // example:"view",choices=["view","yesterday_view","month_view","ctr","click","read","collect","pay"]
+  RequestRuleType rule_type = 6; // 热门:0,分类:1, 主题:2, 兴趣:3
+  int32 page_num = 7;
+}
+
+
+message ClassifyResponse {
+  Status ResponseStatus = 1;
+  string Massage = 2;
+  ClassifyData Data = 3;
+}
+
+message SectionMoreResponse{
+  Status ResponseStatus = 1;
+  string Massage = 2;
+  SectionData Data = 3;
+}
+
+message ClassifyData {
+  repeated int32 CartoonID = 1;
+  bool PassthroughActive = 2;
+  repeated Passthrough Passthroughs = 3;
+  repeated Log log = 4;
+}
+
+message SectionData {
+  repeated int32 CartoonID = 1;
+  repeated Log log = 2;
+}
+
+message MultiCids {
+
+    repeated int32 cids = 1;
+}
+
+message MultiplyRecommendRequest {
+   UserInfo user = 1;
+  // 规则召回keys
+  repeated Params params = 2;
+  string bussiness_id = 3;
+}
+
+message RelateRecommendRequest{
+  UserInfo user = 1;
+  repeated int32 sim_cids = 2;
+  string bussiness_id = 3;
+  int32 len = 4;
+}
+
+message MultiplyData {
+  repeated MultiCids CartoonIDs = 1;
+  bool PassthroughActive = 2;
+  repeated Passthrough Passthroughs = 3;
+  repeated Log log = 4;
+}
+
+
+message MultiplyResponse {
+  Status ResponseStatus = 1;
+  string Massage = 2;
+  MultiplyData Data = 3;
+}

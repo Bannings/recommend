@@ -1,0 +1,57 @@
+{
+  "db_customize": {
+    "schema": "smh_customize",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "username": "recommend",
+    "password": "R1QaL1^G0Fpv8^ZT"
+  },
+  "db_user_like": {
+    "schema": "samh_recommender",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "username": "recommend",
+    "password": "R1QaL1^G0Fpv8^ZT"
+  },
+  "db_features": {
+    "schema": "samh_recommend_features",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "username": "recommender",
+    "password": "BhRuKc!RJ64eBDQn"
+  },
+  "db_recall": {
+    "schema": "samh_recommend_recall",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "username": "recommender",
+    "password": "BhRuKc!RJ64eBDQn"
+  },
+  "db_banner": {
+    "schema": "samh_banner",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "username": "root",
+    "password": "shire4957."
+  },
+  "db_comic": {
+    "schema": 4,
+    "host": "127.0.0.1",
+    "port": "3306",
+    "username": "recommend",
+    "password": "eXte1*nnuGoIiUdN"
+  },
+  "redis_cli": {
+    "db": "samh_user",
+    "host": "127.0.0.1",
+    "port": "7006",
+    "password": "0iY87blaERqARYie"
+  },
+  "user_portrait_url": "http://127.0.0.1:9003/v2/app/user/info",
+  "new_user_comic_list_url": "http://127.0.0.1:8090/book_list/newcomer",
+  "new_user_comic_list_more_url": "http://127.0.0.1:8090/book_list/more",
+  "sort_url": "http://127.0.0.1:8018/ctr/predict",
+  "recommend_recall_url": "http://127.0.0.1:9002/personalized_recall",
+  "new_user_url": "http://127.0.0.1:9002/v1/user/newer",
+  "banner_info_url": "http://cms-booklist.321mh.com/api/v1/bookList/getBookByType"
+}

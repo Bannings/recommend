@@ -1,0 +1,58 @@
+syntax = "proto3";
+package proto;
+
+service DivisionRPC {
+    rpc GetCoverRecommend (User) returns (CoverDivisionResponse){}
+    rpc GetMultiCoverRecommend (User) returns (MultiCoverDivisionResponse){}
+}
+
+enum DivisionStatus {
+    SUCCEED = 0;
+    FAILED = 1;
+}
+
+enum DivisionGender {
+  MALE = 0;
+  FEMALE = 1;
+}
+
+message User {
+  string Udid = 1;
+  int64 Uid = 2;
+  string Version =3;
+  string Channel =4;
+  DivisionGender Gender=5;
+}
+
+message CoverDivision {
+  string Cover =1;
+  DivisionPassthrough Passthrough =2;
+}
+
+message DivisionPassthrough {
+  string ExpId = 1;
+  string BucketId = 2;
+  string BucketName =3;
+  int64 Uid = 4;
+  string Udid = 5;
+  string AlgId = 6;
+  int64 ServeTime =7;
+}
+
+message CoverDivisionResponse {
+  DivisionStatus ResponseStatus = 1;
+  string Massage = 2;
+  CoverDivision Data = 3;
+}
+
+message MultiCoverDivision{
+   int32 ComicID =1;
+   string Cover =2;
+   DivisionPassthrough Passthrough =3;
+}
+
+message MultiCoverDivisionResponse {
+  DivisionStatus ResponseStatus = 1;
+  string Massage = 2;
+  repeated MultiCoverDivision Data = 3;
+}
